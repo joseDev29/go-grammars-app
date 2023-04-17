@@ -1,0 +1,56 @@
+[
+    {
+        "key": "AL",
+        "productions": [
+            ["id", ":=", "P"]
+        ]
+    },
+    {
+        "key": "P",
+        "productions": [
+            ["P", "or", "D"],
+            ["D"]
+        ]
+    },
+    {
+        "key": "D",
+        "productions": [
+            ["D", "and", "C"],
+            ["C"]
+        ]
+    },
+    {
+        "key": "C",
+        "productions": [
+            ["S"],
+            ["not", "(", "P", ")"]
+        ]
+    },
+    {
+        "key": "S",
+        "productions": [
+            ["(", "P", ")"],
+            ["OP", "REL", "OP"],
+            ["true"],
+            ["false"]
+        ]
+    },
+    {
+        "key": "REL",
+        "productions": [
+            ["="],
+            ["<"],
+            ["<="],
+            [">"],
+            [">="],
+            ["<>"]
+        ]  
+    },
+    {
+        "key": "OP",
+        "productions": [
+            ["id"],
+            ["num"]
+        ]
+    }
+]
