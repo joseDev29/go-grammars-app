@@ -34,7 +34,7 @@ const Home = () => {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:3000/api/process-grammar",
+        "http://127.0.0.1:3431/api/process-grammar",
         { rawGrammar: grammarContext.grammar }
       );
       setProcessResponse(response.data.data);
