@@ -19,3 +19,8 @@ func (nonTerminal NonTerminal) HasLeftRecursion() bool {
 	return result
 
 }
+
+type SingleNonTerminal struct {
+	Key        string   `json:"key"`
+	Production []string `json:"production"`
+}

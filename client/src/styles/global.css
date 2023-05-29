@@ -1,5 +1,6 @@
 :root {
   --primary: #1677ff;
+  --primary-opacity: #1677ff40;
 }
 
 .text-center {

@@ -42,15 +42,24 @@ func main() {
 
 		grammar.VerifyIsLL1()
 
+		if grammar.IsLL1 {
+			grammar.GenerateExtendedSeparatedGrammar()
+			grammar.GenerateGraphLR0()
+			grammar.VerifyIsSLR0()
+		}
+
 		return c.JSON(&fiber.Map{
 			"ok": true,
 			"data": map[string]interface{}{
-				"rawGrammar":     grammar.RawGrammar,
-				"cleanedGrammar": grammar.CleanedGrammar,
-				"firstList":      grammar.FirstList,
-				"nextList":       grammar.NextList,
-				"predictionSet":  grammar.PredictionSet,
-				"isLL1":          grammar.IsLL1,
+				"rawGrammar":               grammar.RawGrammar,
+				"cleanedGrammar":           grammar.CleanedGrammar,
+				"firstList":                grammar.FirstList,
+				"nextList":                 grammar.NextList,
+				"predictionSet":            grammar.PredictionSet,
+				"isLL1":                    grammar.IsLL1,
+				"extendedSeparatedGrammar": grammar.ExtendedSeparatedGrammar,
+				"graphLR0":                 grammar.GraphLR0,
+				"isSLR0":                   grammar.IsSLR0,
 			},
 		})
 	})

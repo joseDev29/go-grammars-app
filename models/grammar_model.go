@@ -6,33 +6,16 @@ import (
 	"golang.org/x/exp/slices"
 )
 
-type FirstListItem struct {
-	Key  string   `json:"nonTerminalKey"`
-	List []string `json:"list"`
-}
-
-type NextListItem struct {
-	Key  string   `json:"nonTerminalKey"`
-	List []string `json:"list"`
-}
-
-type ProductionPredictionSet struct {
-	Key  string   `json:"productionKey"`
-	List []string `json:"list"`
-}
-
-type PredictionSetListItem struct {
-	Key  string                    `json:"nonTerminalKey"`
-	List []ProductionPredictionSet `json:"list"`
-}
-
 type Grammar struct {
-	RawGrammar     []NonTerminal
-	CleanedGrammar []NonTerminal
-	FirstList      []FirstListItem
-	NextList       []NextListItem
-	PredictionSet  []PredictionSetListItem
-	IsLL1          bool `json:"isLL1"`
+	RawGrammar               []NonTerminal
+	CleanedGrammar           []NonTerminal
+	FirstList                []FirstListItem
+	NextList                 []NextListItem
+	PredictionSet            []PredictionSetListItem
+	IsLL1                    bool `json:"isLL1"`
+	ExtendedSeparatedGrammar []SingleNonTerminal
+	GraphLR0                 []GraphLR0Node
+	IsSLR0                   bool `json:"isSLR0"`
 }
 
 func (grammar *Grammar) generateCleanedNonTerminal(nonTerminal NonTerminal) {
@@ -403,4 +386,24 @@ P:
 		}
 
 	}
+}
+
+func (grammar *Grammar) GenerateExtendedSeparatedGrammar() {
+
+	grammar.ExtendedSeparatedGrammar = []SingleNonTerminal{}
+
+	for index, nonTerminal := range grammar.RawGrammar {
+
+		if index == 0 {
+			grammar.ExtendedSeparatedGrammar = append(grammar.ExtendedSeparatedGrammar, SingleNonTerminal{Key: EXTENDED_GRAMMAR_FIRST_NON_TERMINAL_KEY, Production: []string{nonTerminal.Key}})
+		}
+
+		for _, production := range nonTerminal.Productions {
+			singleNonTerminal := SingleNonTerminal{Key: nonTerminal.Key, Production: []string{}}
+			singleNonTerminal.Production = append(singleNonTerminal.Production, production...)
+			grammar.ExtendedSeparatedGrammar = append(grammar.ExtendedSeparatedGrammar, singleNonTerminal)
+		}
+
+	}
+
 }

@@ -13,6 +13,7 @@ import { useGrammarContext } from "../../providers/GrammarProvider";
 import { useVisible } from "../../utils/hooks/useVisible";
 
 import "./Home.css";
+import GraphLR0Viewer from "./components/GraphLR0Viewer";
 
 const Home = () => {
   const grammarContext = useGrammarContext();
@@ -125,6 +126,12 @@ const Home = () => {
                 {processResponse.isLL1 ? "Yes" : "No"}
               </span>
             </div>
+            {processResponse.isLL1 && (
+              <div className="home__results-container-item home__graph">
+                <h2>Graph {processResponse.isSLR0 ? "SLR0" : "LR0"}</h2>
+                <GraphLR0Viewer data={processResponse.graphLR0} />
+              </div>
+            )}
           </div>
         )}
       </Modal>
